@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Router, Switch } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
+import ClashContainer from "./Pages/Clash/Container";
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router hook={useHashLocation}>
+      <Switch>
+        <Route path="/about">About Us</Route>
+        <Route path="/clash" component={ClashContainer}/>
+        <Route path="*">404: No such page!</Route>
+      </Switch>
+    </Router>
+  )
 }
 
-export default App;
+export default App
