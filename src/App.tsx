@@ -1,14 +1,14 @@
 import { Route, Router, Switch } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
-import ClashContainer from "./Pages/Clash/Container";
+import ChessContainer from "./components/Pages/Chess/Container";
 
 function App() {
 
   return (
     <Router hook={useHashLocation}>
       <Switch>
-        <Route path="/about">About Us</Route>
-        <Route path="/clash" component={ClashContainer}/>
+        <Route path="/">About Us</Route>
+        <Route path="/chess" component={ChessContainer}/>
         <Route path="*">404: No such page!</Route>
       </Switch>
     </Router>

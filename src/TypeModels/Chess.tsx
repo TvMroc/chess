@@ -25,6 +25,6 @@ export type Player = {
   }
   
   export type DailyLeaderboardType = {
-    daily: ChessPlayer[];
+    daily: Player[];
   }
   
