@@ -19,16 +19,33 @@ const DailyLeaderboard = () => {
     }, []);
     
     return (
-        <>
+      <Box
+      sx={{
+        width: '22.6vw',
+        maxHeight: '70vh',
+        overflowY: 'scroll',
+        scrollbarColor: 'aqua rgb(0, 0, 0, 0)',
+        scrollbarWidth: 'thin', 
+    
+        '&::-webkit-scrollbar': {
+          width: '8px',
+          borderRadius: '8px',
+        },
+
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'aqua',
+        },
+      }}
+    >
           <Paper sx={{marginBottom: 2, padding: 2}}>
             <Typography variant="h4">Daily leaderboard</Typography>
           </Paper >
           <Box sx={{display:'flex', gap: '20px', flexWrap: 'wrap'}}>
-            { leaderboard?.daily.map((player) => (
+            {leaderboard?.daily.map((player) => (
                 <PlayerCard player={player} ></PlayerCard>
             ))}
           </Box>
-        </>
+        </Box>
     );
 }
 
