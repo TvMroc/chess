@@ -26,5 +26,16 @@ export type Player = {
   
   export type DailyLeaderboardType = {
     daily: Player[];
+    daily960: Player[];
+    live_rapid: Player[];
+    live_blitz: Player[];
+    live_bullet: Player[];
+    live_bughouse: Player[];
+    live_blitz960: Player[];
+    live_threecheck: Player[];
+    live_crazyhouse: Player[];
+    live_kingofthehill: Player[]
+    lessons: Player[];
+    tactics: Player[];
   }
   
