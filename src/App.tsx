@@ -12,7 +12,6 @@ function App() {
       <Layout/>
       <Router hook={useHashLocation}>
         <Switch>
-          <Route path="/">About Us</Route>
           <Route path="/chess" component={ChessContainer}/>
           
           <Route path="/player/:id">

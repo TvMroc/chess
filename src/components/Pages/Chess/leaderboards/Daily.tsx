@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Tooltip, Typography } from "@mui/material";
-import { PlayerCard } from "../../../methods/PlayerCard";
+import { PlayerCard } from "../../../PlayerCard";
 import { DailyLeaderboardType, Player } from "../../../../TypeModels/Chess";
 
 const DailyLeaderboard = () => {
@@ -28,7 +28,7 @@ const DailyLeaderboard = () => {
   }, [boardName, leaderboard]);
 
   return (
-    <Box sx={{ width: "22.6vw", maxHeight: "70vh", overflowY: "scroll", scrollbarColor: "aqua rgb(0, 0, 0, 0)", scrollbarWidth: "thin", "&::-webkit-scrollbar": { width: "8px", borderRadius: "8px" }, "&::-webkit-scrollbar-thumb": { backgroundColor: "aqua" },}}>
+    <Box sx={{ width: "24vw", maxHeight: "70vh", overflowY: "scroll", scrollbarColor: "aqua rgb(0, 0, 0, 0)", scrollbarWidth: "thin", "&::-webkit-scrollbar": { width: "8px", borderRadius: "8px" }, "&::-webkit-scrollbar-thumb": { backgroundColor: "aqua" },}}>
       <Paper sx={{ display: 'flex', gap: '10px', marginBottom: 2, padding: 2, flexDirection: 'row', alignItems: 'center' }}>
         <Tooltip followCursor={true} title="Chess leaderboard">
           <FormControl sx={{ flex: 1 }} variant="outlined">

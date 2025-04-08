@@ -1,26 +1,38 @@
 import axios from "axios";
 import PlayerComponent from "./Component";
-import { SetStateAction, useEffect, useState } from "react";
-import { ChessPlayer } from "../../../TypeModels/Player";
+import { useEffect, useState } from "react";
+import { ChessPlayer, Stats } from "../../../TypeModels/Player";
 
 type Props = {
     username: string;
 }
 
 const PlayerContainer = ({username}: Props) => {
-    const [playerData, setPlayerData] = useState<ChessPlayer>();
+    const [playerData, setPlayerData] = useState<ChessPlayer | null>(null);
+    const [playerStats, setPlayerStats] = useState<Stats | null>(null);
+    
+    useEffect(() => { 
+        axios.get<Stats>(`https://api.chess.com/pub/player/${username}/stats`)
+        .then(async (response) => {
+            setPlayerStats(response.data);
+        })
+        .catch((error) => console.error(error));
+    }, []);
 
     useEffect(() => {
-        axios
-            .get<ChessPlayer>(`https://api.chess.com/pub/player/${username}`)
-            .then((response: { data: SetStateAction<ChessPlayer | undefined>; }) => {
-                setPlayerData(response.data);
-            }).catch((err: any) => {
-                console.error(err);
-            });
-    }, []);
+      if (!playerStats) return;  
+      axios
+        .get<ChessPlayer>(`https://api.chess.com/pub/player/${username}`)
+        .then(async (response) => {
+            var data = response.data;
+            if (playerStats) data.stats = playerStats;
+            setPlayerData(data);
+        })
+        .catch((error) => console.error(error));
+    }, [playerStats]);
+
     return (<>
-        {playerData ? <PlayerComponent data={playerData}/> : <>not found</>}
+        {(playerData != null) ? <PlayerComponent data={playerData}/> : <>not found</>}
     </>);
 }
 
