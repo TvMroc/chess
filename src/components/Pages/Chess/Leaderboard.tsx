@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Tooltip, Typography } from "@mui/material";
-import { PlayerCard } from "../../../PlayerCard";
-import { DailyLeaderboardType, Player } from "../../../../TypeModels/Chess";
+import { DailyLeaderboardType, Player } from "../../../TypeModels/Chess";
+import { PlayerStatCard } from "../../PlayerStatCard";
 
-const DailyLeaderboard = () => {
+type Props = {
+  favorites: string[];
+  addFavorite: (arg0: string) => void;
+  removeFavorite: (arg0: string) => void;
+}
+
+const Leaderboard = ({favorites, addFavorite, removeFavorite} : Props) => {
   const [leaderboard, setLeaderboard] = useState<DailyLeaderboardType | null>(null);
   const [boardName, setBoardName] = useState<keyof DailyLeaderboardType>("daily");
   const [selectedBoard, setSelectedBoard] = useState<Player[]>([]);
@@ -17,8 +23,8 @@ const DailyLeaderboard = () => {
         setLeaderboard(response.data);
         setSelectedBoard(response.data.daily ?? []);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
+        console.error(error);
       });
   }, []);
 
@@ -28,7 +34,7 @@ const DailyLeaderboard = () => {
   }, [boardName, leaderboard]);
 
   return (
-    <Box sx={{ width: "24vw", maxHeight: "70vh", overflowY: "scroll", scrollbarColor: "aqua rgb(0, 0, 0, 0)", scrollbarWidth: "thin", "&::-webkit-scrollbar": { width: "8px", borderRadius: "8px" }, "&::-webkit-scrollbar-thumb": { backgroundColor: "aqua" },}}>
+    <Box sx={{ width: "25vw", minWidth: 340, maxHeight: "94vh", overflowY: "scroll", padding: 0.3, scrollbarColor: "aqua rgb(0, 0, 0, 0)", scrollbarWidth: "thin", "&::-webkit-scrollbar": { width: "8px", borderRadius: "8px" }, "&::-webkit-scrollbar-thumb": { backgroundColor: "aqua" }}}>
       <Paper sx={{ display: 'flex', gap: '10px', marginBottom: 2, padding: 2, flexDirection: 'row', alignItems: 'center' }}>
         <Tooltip followCursor={true} title="Chess leaderboard">
           <FormControl sx={{ flex: 1 }} variant="outlined">
@@ -39,8 +45,8 @@ const DailyLeaderboard = () => {
               {leaderboard &&
               // for each key in leaderboards (daily, rapid or other leaderboards) add an option to select it the leaderboards don't have name just an array of players that's why it uses the keys so you know what you are selecting
                 (Object.keys(leaderboard) as (keyof DailyLeaderboardType)[]).map((board) => (
-                  <MenuItem key={board} value={board}>{board.replace("_", " ")}</MenuItem>
                   // replace the underscores with spaces to improve readability
+                  <MenuItem sx={{textTransform: "capitalize"}} key={board} value={board}>{board.replace("_", " ")}</MenuItem>
                 ))}
             </Select>
           </FormControl>
@@ -50,11 +56,11 @@ const DailyLeaderboard = () => {
       <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
         {selectedBoard.map((player) => (
           // for each player on the leaderboard show a player card
-          <PlayerCard key={player.username} player={player} />
+          <PlayerStatCard favorites={favorites} addFavorite={addFavorite} removeFavorite={removeFavorite} key={player.username} player={player} />
         ))}
       </Box>
     </Box>
   );
 };
 
-export default DailyLeaderboard;
+export default Leaderboard;

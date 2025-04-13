@@ -19,55 +19,36 @@ export type ChessPlayer = {
       type: string;
       channel_url: string;
     }[];
-    stats: Stats;
+    stats?: Stats;
+    games?: Game[];
   };
 
-  export type Stats = {
-    chess_daily: ChessInfo;
-    chess960_daily: ChessInfo;
-    chess_rapid: ChessInfo;
-    chess_bullet: ChessInfo;
-    chess_blitz: ChessInfo;
-    tactics: TacticsInfo;
-    puzzle_rush: PuzzleRushInfo;
-  }
-  
-  type RatingInfo = {
-    rating: number;
-    date: number;
-    rd?: number;
-    game?: string;
-  };
-  
-  type RecordInfo = {
+  export type Stats = { 
     win: number;
     loss: number;
     draw: number;
-    time_per_move?: number;
-    timeout_percent?: number;
-  };
+  }
+
+export type StatRecords = {
+  chess_daily: { record: Stats };
+  chess960_daily: { record: Stats };
+  chess_rapid: { record: Stats };
+  chess_bullet: { record: Stats };
+  chess_blitz: { record: Stats };
+}
   
-  type ChessInfo = {
-    last: RatingInfo;
-    best: RatingInfo;
-    record: RecordInfo;
-  };
-  
-  type TacticsInfo = {
-    highest: {
-      rating: number;
-      date: number;
-    };
-    lowest: {
-      rating: number;
-      date: number;
-    };
-  };
-  
-  type PuzzleRushInfo = {
-    best: {
-      total_attempts: number;
-      score: number;
-    };
-  };
+export type Game = {
+  white: string;
+  black: string;
+  url: string;
+  turn: 'white' | 'black';
+  move_by: number;
+  draw_offer?: 'white' | 'black';
+  last_activity: number;
+  start_time: number;
+  time_control: string;
+  time_class: string;
+  rules: string;
+  rated?: boolean;
+};
   
